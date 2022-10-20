@@ -45,14 +45,14 @@ void loop(void) {
       // pokud jsme na pozici posledního znaku zprávy
       // mínus 15 znaků (záleží na písmu), tak
       // změníme směr výpisu
-      if (pozice>zprava.length()-15) {
+      if (pozice>zprava.length()) {
         smer = 0;
       }
     }
     // zde je směr vpravo
     else {
       // s každou iterací odečteme jedničku
-      pozice -= 1;
+      pozice = 0;
       // po dopočítání na pozici 0 otočíme směr
       if (pozice == 0) {
         smer = 1;
@@ -64,7 +64,7 @@ void loop(void) {
   
   // volitelná pauza 10 ms pro demonstraci
   // vykonání dalších příkazů
-  delay(10);
+  delay(20);
 }
 // funkce vykresliText pro výpis textu na OLED od zadané pozice
 void vykresliText(int posun, String text) {
