@@ -1,4 +1,4 @@
-package com.example.aplikaceprobrle;
+package com.example.smartglassesmanager;
 
 import org.junit.Test;
 
