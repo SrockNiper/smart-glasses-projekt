@@ -31,3 +31,27 @@ google-services.json
 
 # Android Profiling
 *.hprof
+*.bin
+*.lock
+*.jar
+*.receipt
+*.properties
+*.pom
+*.module
+*.aar
+*.txt
+*.1-runtime
+*.dex
+*.flat
+*.dll
+*.zip
+*.0-runtime
+*.4
+*.10
+*.1
+*.0
+*.exe
+*.MF
+*.6-runtime
+*.lck
+*.ok
