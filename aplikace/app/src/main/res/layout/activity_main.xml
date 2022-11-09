@@ -16,16 +16,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/layouttop"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#4CAF50"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_editor_absoluteX="0dp"
-        app:layout_editor_absoluteY="0dp"></LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
