@@ -22,8 +22,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Pridani_zarizeni extends AppCompatActivity {
-    private ListView listView;
-    private ArrayList<String> mDeviceList = new ArrayList<String>();
+    private final ArrayList<String> mDeviceList = new ArrayList<>();
     private BluetoothAdapter mBluetoothAdapter;
 
     @Override
@@ -31,7 +30,7 @@ public class Pridani_zarizeni extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pridani_zarizeni);
 
-        listView = (ListView) findViewById(R.id.bllist);
+        ListView listView = (ListView) findViewById(R.id.bllist);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
@@ -51,7 +50,7 @@ public class Pridani_zarizeni extends AppCompatActivity {
             s.add(bt.getName());
 
         }
-        
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
