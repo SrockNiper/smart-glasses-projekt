@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,7 +33,8 @@ public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickL
                 Manifest.permission.BLUETOOTH,
                 Manifest.permission.BLUETOOTH_ADMIN,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.BLUETOOTH_SCAN
         };
 
         if(!hasPermissions(this, PERMISSIONS)){
@@ -55,6 +57,8 @@ public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickL
         if (bluetoothAdapter == null) {
             // Bluetooth is not supported on this device
             // Show an error message or disable the functionality
+            Toast.makeText(this, "Bluetooth is not supported on this device", Toast.LENGTH_SHORT).show();
+
             return;
         }
 
@@ -73,6 +77,7 @@ public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickL
             }
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
+
 
         // Start discovering devices
         discoverDevices();
@@ -122,6 +127,20 @@ public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickL
             }
         }
     };
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_ENABLE_BT) {
+            if (resultCode == RESULT_OK) {
+                // Bluetooth was enabled, start discovering devices
+                discoverDevices();
+            } else {
+                // User declined to enable Bluetooth, show an error message
+                Toast.makeText(this, "Error: Bluetooth must be enabled", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     @Override
     protected void onDestroy() {
