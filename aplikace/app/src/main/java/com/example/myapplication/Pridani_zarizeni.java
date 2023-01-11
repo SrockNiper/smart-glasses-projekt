@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -96,37 +97,35 @@ public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickL
 
 
     private void discoverDevices() {
-        // Register a broadcast receiver to receive notifications when a device is discovered
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(receiver, filter);
-
-        // Start discovering devices
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_SCAN}, REQUEST_SCAN_PERMISSION);
+        } else {
+            // Register a broadcast receiver to receive notifications when a device is discovered
+            IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+            registerReceiver(mReceiver, filter);
+            // Start discovering devices
+            bluetoothAdapter.startDiscovery();
         }
-        bluetoothAdapter.startDiscovery();
     }
 
+
+
     // Broadcast receiver for receiving notifications when a device is discovered
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // A device was discovered
+                // Discovery has found a device. Get the BluetoothDevice
+                // object and its info from the Intent.
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                // Add the device to the adapter's data list
+                String deviceName = device.getName();
+                String deviceHardwareAddress = device.getAddress(); // MAC address
+                // Add the device to the adapter
                 adapter.addDevice(device);
             }
         }
     };
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -145,7 +144,7 @@ public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         // Make sure to unregister the receiver when the activity is destroyed
-        unregisterReceiver(receiver);
+        unregisterReceiver(mReceiver);
         super.onDestroy();
     }
 
@@ -159,4 +158,16 @@ public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickL
             // You will need to implement the necessary logic for connecting to a Bluetooth device
         }
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_SCAN_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                discoverDevices();
+            } else {
+                // handle the case where the user denied the permission
+                Toast.makeText(this, "The app cannot work without scan permission", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }
