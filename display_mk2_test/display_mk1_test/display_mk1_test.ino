@@ -7,6 +7,7 @@
 // inicializace Bluetooth modulu z knihovny SoftwareSerial
 SoftwareSerial bluetooth(TX, RX);
 
+
 // OLED displej přes I2C 128x32 znaků
 // řadič SSD1306
 
@@ -33,8 +34,12 @@ void setup(void) {
 }
 
 void loop(void) {
+String BluetoothData;
+if (bluetooth.available() > 0) {
+ 
+ BluetoothData=bluetooth.read();
   // vytvoření proměnné s celou zprávou, která se bude vypisovat
-  String zprava = " Navody.dratek.cz";
+  String zprava = BluetoothData;
   zprava += ", cas od spusteni ";
   zprava += millis()/1000;
   zprava += " vterin. ";
@@ -78,6 +83,7 @@ void loop(void) {
   // volitelná pauza 10 ms pro demonstraci
   // vykonání dalších příkazů
   delay(20);
+}
 }
 // funkce vykresliText pro výpis textu na OLED od zadané pozice
 void vykresliText(int posun, String text) {
