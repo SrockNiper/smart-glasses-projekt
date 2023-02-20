@@ -7,7 +7,7 @@
 // inicializace Bluetooth modulu z knihovny SoftwareSerial
 SoftwareSerial bluetooth(TX, RX);
 
-
+int i;
 // OLED displej přes I2C 128x32 znaků
 // řadič SSD1306
 
@@ -46,7 +46,9 @@ if (bluetooth.available() > 0) {
   // porovnání uloženého a aktuálního času
   // při rozdílu větším než 100 ms se provede
   // přepis displeje, zde je to rychlost posunu zprávy
-  if (millis()-prepis > 100) {
+  for (i = 0; i < zprava.length();i++) {
+  
+  
     // následující skupina příkazů
     // obnoví obsah OLED displeje
     mujOled.firstPage();
@@ -63,26 +65,18 @@ if (bluetooth.available() > 0) {
       // pokud jsme na pozici posledního znaku zprávy
       // mínus 15 znaků (záleží na písmu), tak
       // změníme směr výpisu
-      if (pozice>zprava.length()) {
-        smer = 0;
+      if (pozice>zprava.length()-1) {
+        pozice=0;
       }
     }
     // zde je směr vpravo
-    else {
-      // s každou iterací odečteme jedničku
-      pozice = 0;
-      // po dopočítání na pozici 0 otočíme směr
-      if (pozice == 0) {
-        smer = 1;
-      }
-    }
-  }
+  }  
   
   // zde je místo pro další příkazy pro Arduino
   
   // volitelná pauza 10 ms pro demonstraci
   // vykonání dalších příkazů
-  delay(20);
+
 }
 }
 // funkce vykresliText pro výpis textu na OLED od zadané pozice
