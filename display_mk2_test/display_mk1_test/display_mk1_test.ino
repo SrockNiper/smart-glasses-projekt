@@ -37,12 +37,9 @@ void loop(void) {
 String BluetoothData;
 if (bluetooth.available() > 0) {
  
- BluetoothData=bluetooth.read();
+ BluetoothData=bluetooth.readString();
   // vytvoření proměnné s celou zprávou, která se bude vypisovat
   String zprava = BluetoothData;
-  zprava += ", cas od spusteni ";
-  zprava += millis()/1000;
-  zprava += " vterin. ";
   // porovnání uloženého a aktuálního času
   // při rozdílu větším než 100 ms se provede
   // přepis displeje, zde je to rychlost posunu zprávy
@@ -65,7 +62,7 @@ if (bluetooth.available() > 0) {
       // pokud jsme na pozici posledního znaku zprávy
       // mínus 15 znaků (záleží na písmu), tak
       // změníme směr výpisu
-      if (pozice>zprava.length()-1) {
+      if (pozice>zprava.length()) {
         pozice=0;
       }
     }
