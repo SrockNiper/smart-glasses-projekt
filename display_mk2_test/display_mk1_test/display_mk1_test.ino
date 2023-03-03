@@ -43,7 +43,7 @@ if (bluetooth.available() > 0) {
   // porovnání uloženého a aktuálního času
   // při rozdílu větším než 100 ms se provede
   // přepis displeje, zde je to rychlost posunu zprávy
-  for (i = 0; i < zprava.length();i++) {
+  for (i = 0; i < zprava.length()*10;i++) {
   
   
     // následující skupina příkazů
@@ -51,18 +51,18 @@ if (bluetooth.available() > 0) {
     mujOled.firstPage();
     do {
       // vykreslení zadané zprávy od zadané pozice
-      vykresliText(pozice, zprava);
+      vykresliText(pozice/5, zprava);
     } while( mujOled.nextPage() );
     // uložení posledního času obnovení
     prepis = millis();
     // řízení směru výpisu - jako první je směr vlevo
     if (smer) {
-      // s každou iterací přičteme jedničku
+      // s každou iterací přičteme jedničku2
       pozice += 1;
       // pokud jsme na pozici posledního znaku zprávy
       // mínus 15 znaků (záleží na písmu), tak
       // změníme směr výpisu
-      if (pozice>zprava.length()) {
+      if (pozice>zprava.length()*10) {
         pozice=0;
       }
     }
@@ -82,7 +82,7 @@ void vykresliText(int posun, String text) {
   // https://github.com/olikraus/u8glib/wiki/fontsize
   mujOled.setFont(u8g_font_fub14);
   // nastavení výpisu od souřadnic x=0, y=25; y záleží na velikosti písma
-  mujOled.setPrintPos(0, 25);
+  mujOled.setPrintPos(10, 20);
   // uložení části zprávy - od znaku posun uložíme 15 znaků
   // např. na začátku uložíme znaky 0 až 15
   String vypis;
