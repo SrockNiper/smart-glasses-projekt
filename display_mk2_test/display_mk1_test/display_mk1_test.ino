@@ -43,7 +43,7 @@ if (bluetooth.available() > 0) {
   // porovnání uloženého a aktuálního času
   // při rozdílu větším než 100 ms se provede
   // přepis displeje, zde je to rychlost posunu zprávy
-  for (i = 0; i < zprava.length()*10;i++) {
+  for (i = 0; i < zprava.length()*5;i++) {
   
   
     // následující skupina příkazů
@@ -56,16 +56,13 @@ if (bluetooth.available() > 0) {
     // uložení posledního času obnovení
     prepis = millis();
     // řízení směru výpisu - jako první je směr vlevo
-    if (smer) {
+    
       // s každou iterací přičteme jedničku2
       pozice += 1;
       // pokud jsme na pozici posledního znaku zprávy
       // mínus 15 znaků (záleží na písmu), tak
       // změníme směr výpisu
-      if (pozice>zprava.length()*10) {
-        pozice=0;
-      }
-    }
+      
     // zde je směr vpravo
   }  
   
@@ -75,6 +72,7 @@ if (bluetooth.available() > 0) {
   // vykonání dalších příkazů
 
 }
+pozice =0;
 }
 // funkce vykresliText pro výpis textu na OLED od zadané pozice
 void vykresliText(int posun, String text) {
