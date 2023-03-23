@@ -55,6 +55,9 @@ if (bluetooth.available() > 0) {
     } while( mujOled.nextPage() );
     // uložení posledního času obnovení
     prepis = millis();
+    while (pozice == 0 && millis()- prepis <4000) {
+    
+    }
     // řízení směru výpisu - jako první je směr vlevo
     
       // s každou iterací přičteme jedničku2
@@ -73,6 +76,11 @@ if (bluetooth.available() > 0) {
 
 }
 pozice =0;
+mujOled.firstPage();
+    do {
+      // vykreslení zadané zprávy od zadané pozice
+      vykresliText(pozice/5, "ČAS");
+    } while( mujOled.nextPage() );
 }
 // funkce vykresliText pro výpis textu na OLED od zadané pozice
 void vykresliText(int posun, String text) {
