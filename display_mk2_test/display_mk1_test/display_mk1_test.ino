@@ -79,7 +79,7 @@ pozice =0;
 mujOled.firstPage();
     do {
       // vykreslení zadané zprávy od zadané pozice
-      vykresliText(pozice/5, "ČAS");
+      vykresliText(pozice/5, "CAS");
     } while( mujOled.nextPage() );
 }
 // funkce vykresliText pro výpis textu na OLED od zadané pozice
