@@ -24,12 +24,15 @@ import java.util.List;
 import java.util.Set;
 
 public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickListener {
-
+private  ListView listView;
+    private ArrayList<String> lngList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pridani_zarizeni);
+        listView = findViewById(R.id.list_view);
+        lngList = new ArrayList<>();
         // Use this check to determine whether Bluetooth classic is supported on the device.
 // Then you can selectively disable BLE-related features.
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
@@ -69,7 +72,7 @@ public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickL
                     String deviceName = device.getName();
                     String deviceHardwareAddress = device.getAddress(); // MAC address
                     s.add(deviceName + " " + deviceHardwareAddress);
-                    
+
                 }
             }
         }
