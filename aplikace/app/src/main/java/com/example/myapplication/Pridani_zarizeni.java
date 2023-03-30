@@ -33,6 +33,7 @@ private  ListView listView;
         setContentView(R.layout.activity_pridani_zarizeni);
         listView = findViewById(R.id.list_view);
         lngList = new ArrayList<>();
+
         // Use this check to determine whether Bluetooth classic is supported on the device.
 // Then you can selectively disable BLE-related features.
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
@@ -71,14 +72,21 @@ private  ListView listView;
                 for (BluetoothDevice device : pairedDevices) {
                     String deviceName = device.getName();
                     String deviceHardwareAddress = device.getAddress(); // MAC address
-                    s.add(deviceName + " " + deviceHardwareAddress);
+                    lngList.add(deviceName + " " + deviceHardwareAddress);
+                    Toast.makeText(this, "Mrdka",Toast.LENGTH_LONG);
 
                 }
+            }else {
+                Toast.makeText(this,"Nenalezeno žádné zařízení",Toast.LENGTH_LONG);
             }
         }
         // Register for broadcasts when a device is discovered.
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lngList);
+
+        // on below line we are setting adapter for our list view.
+        listView.setAdapter(adapter);
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -100,6 +108,7 @@ private  ListView listView;
                 }
                 String deviceName = device.getName();
                 String deviceHardwareAddress = device.getAddress(); // MAC address
+                lngList.add(deviceName + " " + deviceHardwareAddress);
             }
         }
     };
