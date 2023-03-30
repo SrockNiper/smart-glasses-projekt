@@ -1,9 +1,5 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -19,21 +15,22 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickListener {
-private  ListView listView;
     private ArrayList<String> lngList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pridani_zarizeni);
-        listView = findViewById(R.id.list_view);
+        ListView listView = findViewById(R.id.list_view);
         lngList = new ArrayList<>();
-
+Toast.makeText(this,"mrdat",Toast.LENGTH_LONG).show();
         // Use this check to determine whether Bluetooth classic is supported on the device.
 // Then you can selectively disable BLE-related features.
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
@@ -50,12 +47,16 @@ private  ListView listView;
         BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
         if (bluetoothAdapter == null) {
             // Device doesn't support Bluetooth
+            Toast.makeText(this,"Mrdka z krtka",Toast.LENGTH_LONG).show();
         }
+
         if (!bluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            Toast.makeText(this,"Bluetooth zapnut",Toast.LENGTH_LONG).show();
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
+                Toast.makeText(this,"Není permise",Toast.LENGTH_LONG).show();
                 // here to request the missing permissions, and then overriding
                 //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
                 //                                          int[] grantResults)
@@ -66,25 +67,26 @@ private  ListView listView;
             int REQUEST_ENABLE_BT = 0;
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-            List<String> s = new ArrayList<String>();
+
             if (pairedDevices.size() > 0) {
                 // There are paired devices. Get the name and address of each paired device.
                 for (BluetoothDevice device : pairedDevices) {
                     String deviceName = device.getName();
                     String deviceHardwareAddress = device.getAddress(); // MAC address
                     lngList.add(deviceName + " " + deviceHardwareAddress);
-                    Toast.makeText(this, "Mrdka",Toast.LENGTH_LONG);
+                    Toast.makeText(this, "Mrdka",Toast.LENGTH_LONG).show();
 
                 }
             }else {
-                Toast.makeText(this,"Nenalezeno žádné zařízení",Toast.LENGTH_LONG);
+                Toast.makeText(this,"Nenalezeno žádné zařízení",Toast.LENGTH_LONG).show();
             }
         }
+        Toast.makeText(this,"Hlavní podmínka nefunguje",Toast.LENGTH_LONG).show();
         // Register for broadcasts when a device is discovered.
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lngList);
-
+        Toast.makeText(this,"NEfunguje listview",Toast.LENGTH_LONG).show();
         // on below line we are setting adapter for our list view.
         listView.setAdapter(adapter);
     }
