@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -49,14 +50,16 @@ Toast.makeText(this,"mrdat",Toast.LENGTH_LONG).show();
             // Device doesn't support Bluetooth
             Toast.makeText(this,"Mrdka z krtka",Toast.LENGTH_LONG).show();
         }
-
-        if (!bluetoothAdapter.isEnabled()) {
+        int REQUEST_ENABLE_BT = 0;
+        assert bluetoothAdapter != null;
+        if (bluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             Toast.makeText(this,"Bluetooth zapnut",Toast.LENGTH_LONG).show();
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
                 Toast.makeText(this,"Není permise",Toast.LENGTH_LONG).show();
+                
                 // here to request the missing permissions, and then overriding
                 //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
                 //                                          int[] grantResults)
@@ -64,8 +67,8 @@ Toast.makeText(this,"mrdat",Toast.LENGTH_LONG).show();
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-            int REQUEST_ENABLE_BT = 0;
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+
+
             Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
 
             if (pairedDevices.size() > 0) {
