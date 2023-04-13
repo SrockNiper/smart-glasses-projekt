@@ -31,7 +31,7 @@ public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_pridani_zarizeni);
         ListView listView = findViewById(R.id.list_view);
         lngList = new ArrayList<>();
-Toast.makeText(this,"mrdat",Toast.LENGTH_LONG).show();
+Toast.makeText(this,"začátek",Toast.LENGTH_LONG).show();
         // Use this check to determine whether Bluetooth classic is supported on the device.
 // Then you can selectively disable BLE-related features.
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
@@ -48,7 +48,7 @@ Toast.makeText(this,"mrdat",Toast.LENGTH_LONG).show();
         BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
         if (bluetoothAdapter == null) {
             // Device doesn't support Bluetooth
-            Toast.makeText(this,"Mrdka z krtka",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"nepodporuje bl",Toast.LENGTH_LONG).show();
         }
         int REQUEST_ENABLE_BT = 0;
         assert bluetoothAdapter != null;
@@ -77,7 +77,7 @@ Toast.makeText(this,"mrdat",Toast.LENGTH_LONG).show();
                     String deviceName = device.getName();
                     String deviceHardwareAddress = device.getAddress(); // MAC address
                     lngList.add(deviceName + " " + deviceHardwareAddress);
-                    Toast.makeText(this, "Mrdka",Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "nalezeno zařízení",Toast.LENGTH_LONG).show();
 
                 }
             }else {
