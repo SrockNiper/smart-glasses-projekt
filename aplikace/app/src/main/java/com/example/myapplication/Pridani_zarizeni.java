@@ -6,13 +6,16 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -93,6 +96,13 @@ public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickL
 
         // on below line we are setting adapter for our list view.
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String jmeno = adapterView.getItemAtPosition(i).toString();
+                Toast.makeText(getApplicationContext(),jmeno,Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -131,4 +141,6 @@ public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
 
     }
+
 }
+
