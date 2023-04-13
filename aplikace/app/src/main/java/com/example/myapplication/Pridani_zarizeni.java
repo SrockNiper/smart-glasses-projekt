@@ -31,7 +31,7 @@ public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_pridani_zarizeni);
         ListView listView = findViewById(R.id.list_view);
         lngList = new ArrayList<>();
-Toast.makeText(this,"začátek",Toast.LENGTH_LONG).show();
+
         // Use this check to determine whether Bluetooth classic is supported on the device.
 // Then you can selectively disable BLE-related features.
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
@@ -76,21 +76,21 @@ Toast.makeText(this,"začátek",Toast.LENGTH_LONG).show();
                 for (BluetoothDevice device : pairedDevices) {
                     String deviceName = device.getName();
                     String deviceHardwareAddress = device.getAddress(); // MAC address
-                    Toast.makeText(this,deviceName,Toast.LENGTH_LONG).show();
+
                     lngList.add(deviceName + " " + deviceHardwareAddress);
-                    Toast.makeText(this, "nalezeno zařízení",Toast.LENGTH_LONG).show();
+
 
                 }
             }else {
                 Toast.makeText(this,"Nenalezeno žádné zařízení",Toast.LENGTH_LONG).show();
             }
 
-        Toast.makeText(this,"Hlavní podmínka nefunguje",Toast.LENGTH_LONG).show();
+
         // Register for broadcasts when a device is discovered.
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lngList);
-        Toast.makeText(this,"NEfunguje listview",Toast.LENGTH_LONG).show();
+
         // on below line we are setting adapter for our list view.
         listView.setAdapter(adapter);
     }
