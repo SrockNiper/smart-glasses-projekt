@@ -52,9 +52,9 @@ Toast.makeText(this,"začátek",Toast.LENGTH_LONG).show();
         }
         int REQUEST_ENABLE_BT = 0;
         assert bluetoothAdapter != null;
-        if (bluetoothAdapter.isEnabled()) {
+        if (!bluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            Toast.makeText(this,"Bluetooth zapnut",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Bluetooth není zapnut",Toast.LENGTH_LONG).show();
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
@@ -67,7 +67,7 @@ Toast.makeText(this,"začátek",Toast.LENGTH_LONG).show();
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-
+        }
 
             Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
 
@@ -76,6 +76,7 @@ Toast.makeText(this,"začátek",Toast.LENGTH_LONG).show();
                 for (BluetoothDevice device : pairedDevices) {
                     String deviceName = device.getName();
                     String deviceHardwareAddress = device.getAddress(); // MAC address
+                    Toast.makeText(this,deviceName,Toast.LENGTH_LONG).show();
                     lngList.add(deviceName + " " + deviceHardwareAddress);
                     Toast.makeText(this, "nalezeno zařízení",Toast.LENGTH_LONG).show();
 
@@ -83,7 +84,7 @@ Toast.makeText(this,"začátek",Toast.LENGTH_LONG).show();
             }else {
                 Toast.makeText(this,"Nenalezeno žádné zařízení",Toast.LENGTH_LONG).show();
             }
-        }
+
         Toast.makeText(this,"Hlavní podmínka nefunguje",Toast.LENGTH_LONG).show();
         // Register for broadcasts when a device is discovered.
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
