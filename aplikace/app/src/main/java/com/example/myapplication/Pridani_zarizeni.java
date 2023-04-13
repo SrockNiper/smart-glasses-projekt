@@ -101,6 +101,8 @@ public class Pridani_zarizeni extends AppCompatActivity implements View.OnClickL
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String jmeno = adapterView.getItemAtPosition(i).toString();
                 Toast.makeText(getApplicationContext(),jmeno,Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Pridani_zarizeni.this,Nastavovaci_stranka.class);
+                startActivity(intent);
             }
         });
     }
