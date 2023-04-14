@@ -23,14 +23,22 @@ public class Nastavovaci_stranka extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nastavovaci_stranka);
         Intent intent = getIntent();
-        String jmeno  = intent.getExtras().getString("jmeno");
-        Toast.makeText(this,jmeno,Toast.LENGTH_LONG).show();
-        NotificationManager n = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        if(n.isNotificationPolicyAccessGranted()) {
+        String jmenod  = intent.getExtras().getString("jmeno");
+        Toast.makeText(this,jmenod,Toast.LENGTH_LONG).show();
+        if (jmenod != null){
+            int delka = jmenod.length();
+            String adresa = jmenod.substring(delka-17);
+            Toast.makeText(this,adresa,Toast.LENGTH_LONG).show();
+        }
+
+        //NotificationManager n = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        /*if(n.isNotificationPolicyAccessGranted()) {
         }else{
             startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
-        }
-        LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, new IntentFilter("Msg"));
+        }*/
+        //LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, new IntentFilter("Msg"));
     }
     private BroadcastReceiver onNotice= new BroadcastReceiver() {
         @Override
