@@ -67,7 +67,7 @@ public class Nastavovaci_stranka extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(Nastavovaci_stranka.this, "Connecting...", "Please Wait!!!");
+            progress = ProgressDialog.show(Nastavovaci_stranka.this, "Připojování", "Zkouška spojení");
         }
 
         @Override
@@ -102,10 +102,10 @@ public class Nastavovaci_stranka extends AppCompatActivity {
             super.onPostExecute(result);
 
             if (!ConnectSuccess) {
-                msg("Connection Failed. Is it a SPP Bluetooth? Try again.");
+                msg("Připojení selhalo");
                 finish();
             } else {
-                msg("Connected");
+                msg("Připojeno");
                 isBtConnected = true;
             }
 
