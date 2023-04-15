@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.Manifest;
-import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -9,44 +8,55 @@ import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.Html;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.io.IOException;
 import java.util.UUID;
 
 public class Nastavovaci_stranka extends AppCompatActivity {
+    Button testbt;
     BluetoothAdapter myBluetooth = null;
     BluetoothSocket btSocket = null;
     private boolean isBtConnected = false;
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private ProgressDialog progress;
-    String adresa;
+    String adresa = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nastavovaci_stranka);
+        testbt = findViewById(R.id.button1);
+
         Intent intent = getIntent();
         String jmenod = intent.getExtras().getString("jmeno");
+
         Toast.makeText(this, jmenod, Toast.LENGTH_LONG).show();
         if (jmenod != null) {
             int delka = jmenod.length();
             adresa = jmenod.substring(delka - 17);
             Toast.makeText(this, adresa, Toast.LENGTH_LONG).show();
+
         }
+
+        testbt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                sendSignal("1");
+            }
+        });
         new ConnectBT().execute();
         //NotificationManager n = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -60,6 +70,17 @@ public class Nastavovaci_stranka extends AppCompatActivity {
 
     private void msg(String s) {
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+    }
+    private void sendSignal ( String number ) {
+        if ( btSocket != null ) {
+            try {
+                btSocket.getOutputStream().write(number.getBytes());
+            } catch (IOException e) {
+                msg("Error");
+            }
+        }else{
+            msg("Nepodařilo se odeslat");
+        }
     }
 
     private class ConnectBT extends AsyncTask<Void, Void, Void> {
