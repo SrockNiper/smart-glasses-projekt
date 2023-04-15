@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Glasses Manager</string>
+    <string name="bluetooth_not_supported">bluetooth not supported</string>
+    <string name="ble_not_supported">ble not supported</string>
+</resources>
