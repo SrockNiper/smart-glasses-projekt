@@ -54,7 +54,7 @@ public class Nastavovaci_stranka extends AppCompatActivity {
         testbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                sendSignal("1");
+                sendSignal("Komunikace navazana");
             }
         });
         new ConnectBT().execute();
