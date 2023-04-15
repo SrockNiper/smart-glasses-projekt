@@ -1,0 +1,30 @@
+Pøevod Solid Edge -> STL
+Datum: úterı,duben 11,2023 11:10dop.
+Zdrojovı soubor:C:\Users\Uzivatel\Documents\GitHub\smart-glasses-projekt\krabicka_drzak.par
+Zdrojovı systém: SOLID EDGE
+
+Hardware:
+Procesor: Intel(R) Core(TM) i7-4810MQ CPU @ 2.80GHz
+Operaèní systém: Windows 10 Professional
+Instalovaná pamì: 15,88 GB
+
+Informace o softwaru:
+Verze Parasolid: 32.1.222
+Verze PSBodyshop: 32.1.94
+Verze Solid Edge: 221.00.00.114 x64
+
+Monosti exportu STL:
+Formát vıstupního souboru:ASCII
+Export zobrazenıch souèástí:Vypnuto
+Monost struktury: Monolithic
+Export jednotek:Millimeter
+Export hodnoty tolerance:0,001000
+Export typu tolerance:Fine
+Export hodnoty úhlu roviny plochy:0,523599
+
+Postup pøevodu:
+Fáze 1 ze 2  – naèítání informací Parasolid...
+Fáze 2 ze 2  – pøevod Parasolid na cizí datové typy...
+Poèet vytvoøenıch souborù STL: 1
+Proces pøevodu dokonèen
+Èas potøebnı k pøevodu:00 : 00 : 00
