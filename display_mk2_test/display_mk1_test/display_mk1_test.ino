@@ -7,7 +7,7 @@
 // inicializace Bluetooth modulu z knihovny SoftwareSerial
 SoftwareSerial bluetooth(TX, RX);
 
-
+int i;
 // OLED displej přes I2C 128x32 znaků
 // řadič SSD1306
 
@@ -37,53 +37,50 @@ void loop(void) {
 String BluetoothData;
 if (bluetooth.available() > 0) {
  
- BluetoothData=bluetooth.read();
+ BluetoothData=bluetooth.readString();
   // vytvoření proměnné s celou zprávou, která se bude vypisovat
   String zprava = BluetoothData;
-  zprava += ", cas od spusteni ";
-  zprava += millis()/1000;
-  zprava += " vterin. ";
   // porovnání uloženého a aktuálního času
   // při rozdílu větším než 100 ms se provede
   // přepis displeje, zde je to rychlost posunu zprávy
-  if (millis()-prepis > 100) {
+  for (i = 0; i < zprava.length()*5;i++) {
+  
+  
     // následující skupina příkazů
     // obnoví obsah OLED displeje
     mujOled.firstPage();
     do {
       // vykreslení zadané zprávy od zadané pozice
-      vykresliText(pozice, zprava);
+      vykresliText(pozice/5, zprava);
     } while( mujOled.nextPage() );
     // uložení posledního času obnovení
     prepis = millis();
+    while (pozice == 0 && millis()- prepis <4000) {
+    
+    }
     // řízení směru výpisu - jako první je směr vlevo
-    if (smer) {
-      // s každou iterací přičteme jedničku
+    
+      // s každou iterací přičteme jedničku2
       pozice += 1;
       // pokud jsme na pozici posledního znaku zprávy
       // mínus 15 znaků (záleží na písmu), tak
       // změníme směr výpisu
-      if (pozice>zprava.length()) {
-        smer = 0;
-      }
-    }
+      
     // zde je směr vpravo
-    else {
-      // s každou iterací odečteme jedničku
-      pozice = 0;
-      // po dopočítání na pozici 0 otočíme směr
-      if (pozice == 0) {
-        smer = 1;
-      }
-    }
-  }
+  }  
   
   // zde je místo pro další příkazy pro Arduino
   
   // volitelná pauza 10 ms pro demonstraci
   // vykonání dalších příkazů
-  delay(20);
+
 }
+pozice =0;
+mujOled.firstPage();
+    do {
+      // vykreslení zadané zprávy od zadané pozice
+      vykresliText(pozice/5, "CAS");
+    } while( mujOled.nextPage() );
 }
 // funkce vykresliText pro výpis textu na OLED od zadané pozice
 void vykresliText(int posun, String text) {
@@ -91,7 +88,7 @@ void vykresliText(int posun, String text) {
   // https://github.com/olikraus/u8glib/wiki/fontsize
   mujOled.setFont(u8g_font_fub14);
   // nastavení výpisu od souřadnic x=0, y=25; y záleží na velikosti písma
-  mujOled.setPrintPos(0, 25);
+  mujOled.setPrintPos(10, 20);
   // uložení části zprávy - od znaku posun uložíme 15 znaků
   // např. na začátku uložíme znaky 0 až 15
   String vypis;

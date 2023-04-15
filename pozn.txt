@@ -1,0 +1,1 @@
+Display problém v kódu, bluetooth odjede dřív než má 
