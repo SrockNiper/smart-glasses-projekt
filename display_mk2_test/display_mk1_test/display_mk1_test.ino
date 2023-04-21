@@ -22,6 +22,11 @@ long int prepis = 0;
 // proměnná pro uložení aktuální pozice a směru výpisu zprávy
 int pozice = 0;
 bool smer = 1;
+String cas;
+int hodiny;
+int minuty;
+int sekundy;
+int mezicas;
 
 void setup(void) {
   // pro otočení displeje o 180 stupňů
@@ -31,15 +36,31 @@ void setup(void) {
   bluetooth.println("Arduino zapnuto, test Bluetooth..");
   // nastavení pinu s LED diodou jako výstup
   pinMode(pinLED, OUTPUT);
+
 }
 
 void loop(void) {
-String BluetoothData;
+
 if (bluetooth.available() > 0) {
- 
+ String BluetoothData;
  BluetoothData=bluetooth.readString();
   // vytvoření proměnné s celou zprávou, která se bude vypisovat
+
   String zprava = BluetoothData;
+  if(zprava.length() == 8 && zprava[2] == ':' && zprava[5] == ':'){
+      hodiny = zprava.substring(0, 2).toInt();
+      minuty = BluetoothData.substring(3, 5).toInt();
+      sekundy = BluetoothData.substring(6, 8).toInt();
+      mezicas = millis();
+      
+      mujOled.firstPage();
+    do {
+      // vykreslení zadané zprávy od zadané pozice
+      vykresliText(pozice/5, (String(hodiny) + ":" + String(minuty) + ":" + String(sekundy)) );
+    } while( mujOled.nextPage() );
+}
+
+  else{
   // porovnání uloženého a aktuálního času
   // při rozdílu větším než 100 ms se provede
   // přepis displeje, zde je to rychlost posunu zprávy
@@ -68,7 +89,7 @@ if (bluetooth.available() > 0) {
       
     // zde je směr vpravo
   }  
-  
+  }
   // zde je místo pro další příkazy pro Arduino
   
   // volitelná pauza 10 ms pro demonstraci
