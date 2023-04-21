@@ -23,17 +23,18 @@ long int prepis = 0;
 int pozice = 0;
 bool smer = 1;
 String cas;
-int hodiny;
-int minuty;
-int sekundy;
-int mezicas;
-
+byte hodiny;
+byte minuty;
+byte sekundy;
+long mezicas;
+String BluetoothData;
 void setup(void) {
   // pro otočení displeje o 180 stupňů
   // stačí odkomentovat řádek níže
    mujOled.setRot180();
  bluetooth.begin(9600);
   bluetooth.println("Arduino zapnuto, test Bluetooth..");
+ Serial.begin(9600);
   // nastavení pinu s LED diodou jako výstup
   pinMode(pinLED, OUTPUT);
 
@@ -42,7 +43,7 @@ void setup(void) {
 void loop(void) {
 
 if (bluetooth.available() > 0) {
- String BluetoothData;
+ 
  BluetoothData=bluetooth.readString();
   // vytvoření proměnné s celou zprávou, která se bude vypisovat
 
@@ -58,9 +59,8 @@ if (bluetooth.available() > 0) {
       // vykreslení zadané zprávy od zadané pozice
       vykresliText(pozice/5, (String(hodiny) + ":" + String(minuty) + ":" + String(sekundy)) );
     } while( mujOled.nextPage() );
-}
-
-  else{
+}else{
+  mezicas = millis();
   // porovnání uloženého a aktuálního času
   // při rozdílu větším než 100 ms se provede
   // přepis displeje, zde je to rychlost posunu zprávy
@@ -95,13 +95,33 @@ if (bluetooth.available() > 0) {
   // volitelná pauza 10 ms pro demonstraci
   // vykonání dalších příkazů
 
-}
+}else{
 pozice =0;
+if (mezicas <millis()-1000 ) {
+  Serial.println("sekunda");
+  sekundy += 1;
+  if (sekundy == 60) {
+  sekundy = 0;
+  minuty += 1;
+  }
+  if (minuty == 60) {
+  minuty = 0;
+  hodiny += 1;
+  }
+  if (hodiny == 24) {
+  hodiny = 0;
+  }
+  mezicas = millis();
+
+}
+cas = (String(hodiny) + ":" + String(minuty) + ":" + String(sekundy));
 mujOled.firstPage();
     do {
       // vykreslení zadané zprávy od zadané pozice
-      vykresliText(pozice/5, "CAS");
+      vykresliText(pozice/5,cas);
     } while( mujOled.nextPage() );
+}
+Serial.println("konec cyklu");
 }
 // funkce vykresliText pro výpis textu na OLED od zadané pozice
 void vykresliText(int posun, String text) {
