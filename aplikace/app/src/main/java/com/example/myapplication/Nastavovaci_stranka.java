@@ -31,6 +31,7 @@ import java.util.UUID;
 public class Nastavovaci_stranka extends AppCompatActivity {
     Date currentTime = Calendar.getInstance().getTime();
     Button testbt;
+    Button casbt;
     BluetoothAdapter myBluetooth = null;
     BluetoothSocket btSocket = null;
     private boolean isBtConnected = false;
@@ -48,6 +49,8 @@ public class Nastavovaci_stranka extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nastavovaci_stranka);
         testbt = findViewById(R.id.button1);
+        casbt = findViewById(R.id.tlacitko);
+
         dateFormat = new SimpleDateFormat("HH:mm:ss");
         Intent intent = getIntent();
         String jmenod = intent.getExtras().getString("jmeno");
@@ -63,7 +66,13 @@ public class Nastavovaci_stranka extends AppCompatActivity {
         testbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                sendSignal("Komunikace navazana ");
+                sendSignal("Komunikace navazana");
+
+            }
+        });
+        casbt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 cas = String.valueOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(Calendar.getInstance().get(Calendar.MINUTE)) + ":" + String.valueOf(Calendar.getInstance().get(Calendar.SECOND));
                 sendSignal(cas);
             }
