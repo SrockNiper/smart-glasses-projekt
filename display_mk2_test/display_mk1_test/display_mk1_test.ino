@@ -54,11 +54,7 @@ if (bluetooth.available() > 0) {
       sekundy = BluetoothData.substring(6, 8).toInt();
       mezicas = millis();
       
-      mujOled.firstPage();
-    do {
-      // vykreslení zadané zprávy od zadané pozice
-      vykresliText(pozice/5, (String(hodiny) + ":" + String(minuty) + ":" + String(sekundy)) );
-    } while( mujOled.nextPage() );
+      
 }else{
   mezicas = millis();
   // porovnání uloženého a aktuálního času
