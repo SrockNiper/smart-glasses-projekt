@@ -23,9 +23,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 public class Nastavovaci_stranka extends AppCompatActivity {
+    Date currentTime = Calendar.getInstance().getTime();
     Button testbt;
     BluetoothAdapter myBluetooth = null;
     BluetoothSocket btSocket = null;
@@ -33,13 +37,18 @@ public class Nastavovaci_stranka extends AppCompatActivity {
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private ProgressDialog progress;
     String adresa = null;
+    String cas;
+    private SimpleDateFormat dateFormat;
+    private Calendar calendar;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nastavovaci_stranka);
         testbt = findViewById(R.id.button1);
-
+        dateFormat = new SimpleDateFormat("HH:mm:ss");
         Intent intent = getIntent();
         String jmenod = intent.getExtras().getString("jmeno");
 
@@ -54,7 +63,9 @@ public class Nastavovaci_stranka extends AppCompatActivity {
         testbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                sendSignal("Komunikace navazana");
+                sendSignal("Komunikace navazana ");
+                cas = String.valueOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(Calendar.getInstance().get(Calendar.MINUTE)) + ":" + String.valueOf(Calendar.getInstance().get(Calendar.SECOND));
+                sendSignal(cas);
             }
         });
         new ConnectBT().execute();
