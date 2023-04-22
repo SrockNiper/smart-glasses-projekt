@@ -22,24 +22,42 @@ long int prepis = 0;
 // proměnná pro uložení aktuální pozice a směru výpisu zprávy
 int pozice = 0;
 bool smer = 1;
-
+String cas;
+byte hodiny;
+byte minuty;
+byte sekundy;
+long mezicas;
+int vypocet;
+String BluetoothData;
 void setup(void) {
   // pro otočení displeje o 180 stupňů
   // stačí odkomentovat řádek níže
    mujOled.setRot180();
  bluetooth.begin(9600);
   bluetooth.println("Arduino zapnuto, test Bluetooth..");
+ 
   // nastavení pinu s LED diodou jako výstup
   pinMode(pinLED, OUTPUT);
+
 }
 
 void loop(void) {
-String BluetoothData;
+
 if (bluetooth.available() > 0) {
  
  BluetoothData=bluetooth.readString();
   // vytvoření proměnné s celou zprávou, která se bude vypisovat
+
   String zprava = BluetoothData;
+  if(zprava.length() == 8 && zprava[2] == ':' && zprava[5] == ':'){
+      hodiny = zprava.substring(0, 2).toInt();
+      minuty = BluetoothData.substring(3, 5).toInt();
+      sekundy = BluetoothData.substring(6, 8).toInt() + 2;
+      mezicas = millis();
+      
+      
+}else{
+ 
   // porovnání uloženého a aktuálního času
   // při rozdílu větším než 100 ms se provede
   // přepis displeje, zde je to rychlost posunu zprávy
@@ -68,19 +86,54 @@ if (bluetooth.available() > 0) {
       
     // zde je směr vpravo
   }  
-  
+  }
   // zde je místo pro další příkazy pro Arduino
   
   // volitelná pauza 10 ms pro demonstraci
   // vykonání dalších příkazů
 
-}
+}else{
 pozice =0;
+if (mezicas <millis()) {
+  vypocet = (millis() - mezicas)/975;
+  while(vypocet != 0){
+  sekundy += 1;
+  vypocet -= 1;
+  if (sekundy == 60) {
+  sekundy = 0;
+  minuty += 1;
+  }
+  if (minuty == 60) {
+  minuty = 0;
+  hodiny += 1;
+  }
+  if (hodiny == 24) {
+  hodiny = 0;
+  }
+  mezicas = millis();
+}
+}
+if (hodiny<10) {
+  cas = "0";
+}
+cas += String(hodiny) + ":";
+if (minuty < 10) {
+  cas += "0";
+}
+cas += String(minuty) + ":";
+if (sekundy < 10) {
+cas += "0";
+}
+
+cas += String(sekundy);
 mujOled.firstPage();
     do {
       // vykreslení zadané zprávy od zadané pozice
-      vykresliText(pozice/5, "CAS");
+      vykresliText(pozice/5,cas);
     } while( mujOled.nextPage() );
+}
+
+cas="";
 }
 // funkce vykresliText pro výpis textu na OLED od zadané pozice
 void vykresliText(int posun, String text) {
