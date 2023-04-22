@@ -94,7 +94,7 @@ if (bluetooth.available() > 0) {
 
 }else{
 pozice =0;
-if (mezicas <millis()-1000 ) {
+if (mezicas <millis()) {
   vypocet = (millis() - mezicas)/1000;
   while(vypocet != 0){
   sekundy += 1;
