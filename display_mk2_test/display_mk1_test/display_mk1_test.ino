@@ -34,7 +34,7 @@ void setup(void) {
    mujOled.setRot180();
  bluetooth.begin(9600);
   bluetooth.println("Arduino zapnuto, test Bluetooth..");
- Serial.begin(9600);
+ 
   // nastavení pinu s LED diodou jako výstup
   pinMode(pinLED, OUTPUT);
 
@@ -94,7 +94,7 @@ if (bluetooth.available() > 0) {
 }else{
 pozice =0;
 if (mezicas <millis()-1000 ) {
-  Serial.println("sekunda");
+ 
   sekundy += 1;
   if (sekundy == 60) {
   sekundy = 0;
@@ -110,14 +110,27 @@ if (mezicas <millis()-1000 ) {
   mezicas = millis();
 
 }
-cas = (String(hodiny) + ":" + String(minuty) + ":" + String(sekundy));
+if (hodiny<10) {
+  cas = "0";
+}
+cas += String(hodiny) + ":";
+if (minuty < 10) {
+  cas += "0";
+}
+cas += String(minuty) + ":";
+if (sekundy < 10) {
+cas += "0";
+}
+
+cas += String(sekundy);
 mujOled.firstPage();
     do {
       // vykreslení zadané zprávy od zadané pozice
       vykresliText(pozice/5,cas);
     } while( mujOled.nextPage() );
 }
-Serial.println("konec cyklu");
+
+cas="";
 }
 // funkce vykresliText pro výpis textu na OLED od zadané pozice
 void vykresliText(int posun, String text) {
