@@ -27,6 +27,7 @@ byte hodiny;
 byte minuty;
 byte sekundy;
 long mezicas;
+int vypocet;
 String BluetoothData;
 void setup(void) {
   // pro otočení displeje o 180 stupňů
@@ -51,12 +52,12 @@ if (bluetooth.available() > 0) {
   if(zprava.length() == 8 && zprava[2] == ':' && zprava[5] == ':'){
       hodiny = zprava.substring(0, 2).toInt();
       minuty = BluetoothData.substring(3, 5).toInt();
-      sekundy = BluetoothData.substring(6, 8).toInt();
+      sekundy = BluetoothData.substring(6, 8).toInt() + 2;
       mezicas = millis();
       
       
 }else{
-  mezicas = millis();
+ 
   // porovnání uloženého a aktuálního času
   // při rozdílu větším než 100 ms se provede
   // přepis displeje, zde je to rychlost posunu zprávy
@@ -94,8 +95,10 @@ if (bluetooth.available() > 0) {
 }else{
 pozice =0;
 if (mezicas <millis()-1000 ) {
- 
+  vypocet = (millis() - mezicas)/1000;
+  while(vypocet != 0){
   sekundy += 1;
+  vypocet -= 1;
   if (sekundy == 60) {
   sekundy = 0;
   minuty += 1;
@@ -108,7 +111,7 @@ if (mezicas <millis()-1000 ) {
   hodiny = 0;
   }
   mezicas = millis();
-
+}
 }
 if (hodiny<10) {
   cas = "0";
