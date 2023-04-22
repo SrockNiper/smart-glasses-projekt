@@ -1,4 +1,4 @@
-# smart glasses projekt
+# Smart glasses projekt
  
 Tento projekt byl vypracován za účelem maturitního projektu.
 
