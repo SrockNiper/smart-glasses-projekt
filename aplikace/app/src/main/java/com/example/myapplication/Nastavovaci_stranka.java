@@ -38,7 +38,7 @@ public class Nastavovaci_stranka extends AppCompatActivity {
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private ProgressDialog progress;
     String adresa = null;
-    String cas;
+    String cas = "";
     private SimpleDateFormat dateFormat;
     private Calendar calendar;
 
@@ -73,8 +73,21 @@ public class Nastavovaci_stranka extends AppCompatActivity {
         casbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cas = String.valueOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(Calendar.getInstance().get(Calendar.MINUTE)) + ":" + String.valueOf(Calendar.getInstance().get(Calendar.SECOND));
+                if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) < 10){
+                    cas += "0";
+                }
+                cas += String.valueOf(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) + ":";
+                if (Calendar.getInstance().get(Calendar.MINUTE) < 10){
+                    cas+= "0";
+                }
+                cas += String.valueOf(Calendar.getInstance().get(Calendar.MINUTE)) + ":";
+                if (Calendar.getInstance().get(Calendar.SECOND) < 10){
+                    cas += "0";
+                }
+
+                cas += String.valueOf(Calendar.getInstance().get(Calendar.SECOND));
                 sendSignal(cas);
+                cas="";
             }
         });
         new ConnectBT().execute();
