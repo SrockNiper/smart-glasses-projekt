@@ -6,7 +6,7 @@ Skládá se ze tří částí : 1. Mobilní aplikace
                          2. Arduino desky a jiných komponent
                          3. 3D vytisknuté krabičky pro úschovu Arduino desky a jiných komponent
 
-# 1. Mobilní aplikace:
+# 1. Mobilní aplikace
 Vyvíjena v aplikaci Android Studio
 Aplikace je mířená pro telefony s Android 10 (API level 29) ale měla by být schopná pracovat i na novějších Androidech (API level 30 a výše)
 Použitý jazyk: Java
